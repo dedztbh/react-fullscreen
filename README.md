@@ -17,6 +17,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 ### * Setup and render.
 
 You **must** use one handle per full screen element.
+It is not possible to start in Fullscreen. Fullscreen must be enabled from a user action such as `onClick`.
 
 ```jsx
 import React, {useCallback} from 'react';
@@ -99,20 +100,17 @@ function App() {
 export default App;
 ```
 
-It is not possible to start in Fullscreen. Fullscreen must be enabled from a user action such as `onClick`.
-
 ## Types
-
 
 ```ts
 interface FullScreenHandle {
   active: boolean;
   // Specifies if attached element is currently full screen.
 
-  enter: () => void;
+  enter: () => Promise<void>;
   // Requests this element to go full screen.
 
-  exit: () => void;
+  exit: () => Promise<void>;
   // Requests this element to exit full screen.
 
   node: React.MutableRefObject<HTMLDivElement | null>;
@@ -127,6 +125,9 @@ interface FullScreenProps {
 
   onChange?: (state: boolean, handle: FullScreenHandle) => void;
   // Optional callback that gets called when this screen changes state.
+  
+  className?: string;
+  // Optional prop allowing you to apply a custom class name to the FullScreen container
 }
 ```
 

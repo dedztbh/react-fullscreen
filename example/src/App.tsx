@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
-import { FullScreen, useFullscreenHandle } from "react-full-screen";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 function App() {
-  const screen1 = useFullscreenHandle();
-  const screen2 = useFullscreenHandle();
+  const screen1 = useFullScreenHandle();
+  const screen2 = useFullScreenHandle();
 
   const reportChange = useCallback((state, handle) => {
     if (handle === screen1) {
@@ -14,13 +14,17 @@ function App() {
     }
   }, [screen1, screen2]);
 
+  const handleEnterWithErrorLogging = useCallback(() => {
+    return screen2.enter().catch(console.error);
+  }, [screen2]);
+
   return (
     <div>
       <button onClick={screen1.enter}>
         First
       </button>
 
-      <button onClick={screen2.enter}>
+      <button onClick={handleEnterWithErrorLogging}>
         Second
       </button>
 
